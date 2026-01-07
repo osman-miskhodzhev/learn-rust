@@ -5,4 +5,4 @@ fn main() {
 fn print_labeled_measurement(value: i32, unit_label: char) {
     println!("The measurement is: {value}{unit_label}");
 }
-
+// коменты тоже отработал
