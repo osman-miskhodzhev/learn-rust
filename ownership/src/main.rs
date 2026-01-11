@@ -1,12 +1,12 @@
 fn main() {
-    let s1 = String::from("hello");
+    let mut s = String::from("hello");
 
-    let len = calculate_length(&s1);
+    let r1 = &s; // no problem
+    let r2 = &s; // no problem
+    println!("{r1} and {r2}");
+    // Variables r1 and r2 will not be used after this point.
 
-    println!("The length of '{s1}' is {len}.");
-}
-
-fn calculate_length(s: &String) -> usize {
-    s.len()
+    let r3 = &mut s; // no problem
+    println!("{r3}");
 }
 
