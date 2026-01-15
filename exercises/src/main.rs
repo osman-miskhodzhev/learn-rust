@@ -25,6 +25,14 @@ fn min_max(values: &[i32]) -> (i32, i32) {
     (min, max)
 }
 
+fn factorial(n: u32) -> u64{
+    if n == 0 {
+	1
+    } else {
+	n as u64 * factorial(n-1)
+    }
+}
+
 fn main() {
     println!("ex 1: ");
     println!("{}", greet("Osman"));
@@ -37,4 +45,6 @@ fn main() {
     let nums = [3, 1, 4, 1, 5, 9];
     let (min, max) = min_max(&nums);
     println!("Min: {}, Max: {}", min, max);
+    println!("ex 5: ");
+    println!("{}", factorial(5));
 }
