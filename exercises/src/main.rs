@@ -33,11 +33,30 @@ fn factorial(n: u32) -> u64{
     }
 }
 
+fn binary_search(elems: &[i32], n:i32) -> Option<usize> {
+    let mut left = 0;
+    let mut right = elems.len();
+
+    while left < right {
+	let mid = left + (right - left)/2;
+	if elems[mid] == n {
+	    return Some(mid);
+	} else if elems[mid] < n{
+	    left = mid + 1;
+	} else {
+	    right = mid;
+	}
+    }
+    None
+}
+
 fn main() {
     println!("ex 1: ");
     println!("{}", greet("Osman"));
+
     println!("ex 2: ");
-    println!("{}", rectangle_area(5.0, 3.0)); 
+    println!("{}", rectangle_area(5.0, 3.0));
+ 
     println!("ex 3: ");
     println!("{}", is_even(4));
     
@@ -45,6 +64,12 @@ fn main() {
     let nums = [3, 1, 4, 1, 5, 9];
     let (min, max) = min_max(&nums);
     println!("Min: {}, Max: {}", min, max);
+
     println!("ex 5: ");
     println!("{}", factorial(5));
+
+    let arr = [1, 3, 5, 7, 9];
+    println!("{:?}", binary_search(&arr, 5)); // Some(2)
+    println!("{:?}", binary_search(&arr, 4)); // None
+    println!("{:?}", binary_search(&[], 1));  // None
 }
