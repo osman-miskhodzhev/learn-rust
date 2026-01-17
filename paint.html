@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎨 Рисовалка</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    body {
+      background: #121212;
+      color: #e0e0e0;
+      padding: 12px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel {
+      background: #1e1e1e;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 12px;
+      z-index: 10;
+    }
+    .panel label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #ccc;
+    }
+    .panel input[type="color"] {
+      width: 36px;
+      height: 36px;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      background: #333;
+    }
+    .panel input[type="range"] {
+      width: 90px;
+    }
+    .panel button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #4a6cf7;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .panel button:hover {
+      background: #3a5be0;
+    }
+    .panel button.active {
+      background: #2d4bc0;
+    }
+    #canvas {
+      flex: 1;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      background: #1a1a1a;
+      cursor: crosshair;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <label>Цвет пера: <input type="color" id="penColor" value="#ffffff"></label>
+    <label>Толщина пера: <input type="range" id="penSize" min="1" max="50" value="5"></label>
+    <label>Толщина стерки: <input type="range" id="eraserSize" min="1" max="50" value="20"></label>
+    <button id="penBtn">✏️ Перо</button>
+    <button id="eraserBtn">🧽 Стерка</button>
+    <button id="clearBtn">🗑️ Очистить</button>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let currentTool = 'pen';
+    const BG_COLOR = '#1a1a1a'; // тёмный фон холста
+
+    // Масштабирование холста под окно
+    function resizeCanvas() {
+      const panel = document.querySelector('.panel');
+      const panelHeight = panel.offsetHeight + 24;
+      canvas.width = canvas.clientWidth * devicePixelRatio;
+      canvas.height = (window.innerHeight - panelHeight) * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      setCanvasBackground();
+    }
+
+    function setCanvasBackground() {
+      ctx.resetTransform();
+      ctx.fillStyle = BG_COLOR;
+      ctx.fillRect(0, 0, canvas.width / devicePixelRatio, canvas.height / devicePixelRatio);
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Управление инструментами
+    const penBtn = document.getElementById('penBtn');
+    const eraserBtn = document.getElementById('eraserBtn');
+
+    penBtn.onclick = () => {
+      currentTool = 'pen';
+      penBtn.classList.add('active');
+      eraserBtn.classList.remove('active');
+    };
+    eraserBtn.onclick = () => {
+      currentTool = 'eraser';
+      eraserBtn.classList.add('active');
+      penBtn.classList.remove('active');
+    };
+
+    document.getElementById('clearBtn').onclick = setCanvasBackground;
+
+    // Позиция курсора с учётом масштаба
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: (e.clientX - rect.left) * devicePixelRatio,
+        y: (e.clientY - rect.top) * devicePixelRatio
+      };
+    }
+
+    canvas.onmousedown = (e) => {
+      isDrawing = true;
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    };
+
+    canvas.onmousemove = (e) => {
+      if (!isDrawing) return;
+      const pos = getPos(e);
+      ctx.lineTo(pos.x, pos.y);
+
+      if (currentTool === 'pen') {
+        ctx.strokeStyle = document.getElementById('penColor').value;
+        ctx.lineWidth = document.getElementById('penSize').value * devicePixelRatio;
+        ctx.globalCompositeOperation = 'source-over';
+      } else if (currentTool === 'eraser') {
+        ctx.lineWidth = document.getElementById('eraserSize').value * devicePixelRatio;
+        ctx.globalCompositeOperation = 'destination-out';
+      }
+
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    };
+
+    canvas.onmouseup = canvas.onmouseout = () => {
+      isDrawing = false;
+    };
+  </script>
+</body>
+</html>
