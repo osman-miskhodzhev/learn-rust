@@ -1,30 +1,28 @@
-#[derive(Debug)]
 struct Rectangle {
-    width: u32,
-    height: u32,
+    width: f32,
+    height: f32,
 }
 
 impl Rectangle {
-    fn area(&self) -> u32 {
+    fn area(&self) -> f32 {
         self.width * self.height
     }
-    fn width(&self) -> bool {
-        self.width > 0
-    }
+    
 }
 
 fn main() {
-    let rect1 = Rectangle {
-        width: 30,
-        height: 50,
+    let rect = Rectangle {
+        width: 30.0,
+        height: 30.0,
     };
-
-    if rect1.width() {
-        println!("так и живем");
-    }
     println!(
-        "The area of the rectangle is {} square pixels.",
-        rect1.area()
+        "Результат работы программы"
+    );
+    println!(
+        "S = {} * {} = {}",
+        rect.width,
+        rect.height,
+        rect.area()
     );
 }
 
