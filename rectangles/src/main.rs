@@ -8,6 +8,10 @@ impl Rectangle {
         self.width * self.height
     }
     
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+    
 }
 
 fn main() {
@@ -24,5 +28,28 @@ fn main() {
         rect.height,
         rect.area()
     );
-}
+    
+    let rect1 = Rectangle {
+        width: 150.0,
+        height: 150.0
+    };
+    let rect2 = Rectangle {
+        width: 100.0,
+        height: 3.0
+    };
+    
+    if rect2.can_hold(&rect1) {
+        println!(
+            "Прямоугольник с площадью {}, может поместитья в прямоугольник с площадью {}",
+            rect1.area(),
+            rect2.area()
+        );
+    } else {
+        println!(
+            "Прямоугольник с площадью {}, не может поместитья в прямоугольник с площадью {}",
+            rect1.area(),
+            rect2.area()
+        );
+    };
+}   
 
