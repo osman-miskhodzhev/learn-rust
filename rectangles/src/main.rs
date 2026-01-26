@@ -14,11 +14,38 @@ impl Rectangle {
     
 }
 
+struct Cube {
+    width: u32,
+    height: u32,
+    depth: u32,
+}
+
+impl Cube {
+    fn volume(&self) -> u32 {
+        self.width * self.height * self.depth
+    }
+}
+
 fn main() {
     let rect = Rectangle {
         width: 30.0,
         height: 30.0,
     };
+    
+    let cube = Cube {
+        width: 300,
+        height: 450,
+        depth: 100
+    };
+    
+    println!(
+        "Расчет объема. V = {} * {} * {} = {}",
+        cube.width,
+        cube.height,
+        cube.depth,
+        cube.volume()
+    );
+
     println!(
         "Результат работы программы"
     );
