@@ -14,13 +14,13 @@ impl Rectangle {
     
 }
 
-struct Cube {
+struct Box {
     width: u32,
     height: u32,
     depth: u32,
 }
 
-impl Cube {
+impl Box {
     fn volume(&self) -> u32 {
         self.width * self.height * self.depth
     }
@@ -32,7 +32,7 @@ fn main() {
         height: 30.0,
     };
     
-    let cube = Cube {
+    let cube = Box {
         width: 300,
         height: 450,
         depth: 100
