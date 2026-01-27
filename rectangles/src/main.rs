@@ -12,6 +12,17 @@ impl Rectangle {
         self.width > other.width && self.height > other.height
     }
     
+    fn info(&self) {
+        println!(
+            "Прямоугольник {}x{}",
+            self.width, self.height
+        );
+        
+        println!(
+            "Его площадь равна {}",
+            self.area()
+        );
+    }
 }
 
 struct Box {
@@ -24,6 +35,14 @@ impl Box {
     fn volume(&self) -> u32 {
         self.width * self.height * self.depth
     }
+    
+    fn area(&self) -> u32 {
+        2 * (
+            self.width * self.height +
+            self.width * self.depth +
+            self.height * self.depth
+        )
+    }
 }
 
 fn main() {
@@ -31,12 +50,21 @@ fn main() {
         width: 30.0,
         height: 30.0,
     };
+    rect.info();
     
     let cube = Box {
         width: 300,
         height: 450,
         depth: 100
     };
+
+    println!(
+        "Площадь поверхности параллепипеда {} x {} x {} равна {}",
+        cube.width,
+        cube.height,
+        cube.depth,
+        cube.area()
+    );
     
     println!(
         "Расчет объема. V = {} * {} * {} = {}",
@@ -45,38 +73,5 @@ fn main() {
         cube.depth,
         cube.volume()
     );
-
-    println!(
-        "Результат работы программы"
-    );
-    println!(
-        "S = {} * {} = {}",
-        rect.width,
-        rect.height,
-        rect.area()
-    );
-    
-    let rect1 = Rectangle {
-        width: 150.0,
-        height: 150.0
-    };
-    let rect2 = Rectangle {
-        width: 100.0,
-        height: 3.0
-    };
-    
-    if rect2.can_hold(&rect1) {
-        println!(
-            "Прямоугольник с площадью {}, может поместитья в прямоугольник с площадью {}",
-            rect1.area(),
-            rect2.area()
-        );
-    } else {
-        println!(
-            "Прямоугольник с площадью {}, не может поместитья в прямоугольник с площадью {}",
-            rect1.area(),
-            rect2.area()
-        );
-    };
 }   
 
