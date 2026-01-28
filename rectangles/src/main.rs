@@ -22,6 +22,7 @@ impl Rectangle {
             "Его площадь равна {}",
             self.area()
         );
+        println!("===================================");
     }
 }
 
@@ -43,14 +44,26 @@ impl Box {
             self.height * self.depth
         )
     }
+    fn info(&self) {
+        println!("Параллепипед {}x{}x{}", self.width, self.height, self.depth);
+        println!("Его объем равен {}", self.volume());
+        println!("Его площадь равна {}", self.area());
+        println!("===================================");
+    }
 }
 
 fn main() {
+    
+    println!("===================================");
+    println!("          Начало программы");
+    println!("===================================");
     let rect = Rectangle {
         width: 30.0,
         height: 30.0,
     };
     rect.info();
+    
+
     
     let cube = Box {
         width: 300,
@@ -58,20 +71,6 @@ fn main() {
         depth: 100
     };
 
-    println!(
-        "Площадь поверхности параллепипеда {} x {} x {} равна {}",
-        cube.width,
-        cube.height,
-        cube.depth,
-        cube.area()
-    );
-    
-    println!(
-        "Расчет объема. V = {} * {} * {} = {}",
-        cube.width,
-        cube.height,
-        cube.depth,
-        cube.volume()
-    );
+    cube.info();
 }   
 
