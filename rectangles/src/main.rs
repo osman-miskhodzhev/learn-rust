@@ -52,6 +52,18 @@ impl Box {
     }
 }
 
+struct Circle {
+    radius: f64
+}
+impl Circle {
+    fn area(&self) -> f64 {
+        std::f64::consts::PI * self.radius * self.radius
+    }
+    fn info(&self) {
+        println!("Это окружность с радиусом {} и площадью {}", self.radius, self.area())
+    }
+}
+
 fn main() {
     
     println!("===================================");
@@ -72,5 +84,8 @@ fn main() {
     };
 
     cube.info();
+    
+    let circle = Circle {radius: 30.0};
+    circle.info();
 }   
 
