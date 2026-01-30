@@ -60,7 +60,10 @@ impl Circle {
         std::f64::consts::PI * self.radius * self.radius
     }
     fn info(&self) {
-        println!("Это окружность с радиусом {} и площадью {}", self.radius, self.area())
+        println!("Это окружность с радиусом {}, длинной {} и площадью {}", self.radius, self.len(), self.area())
+    }
+    fn len(&self) -> f64 {
+        2.0*std::f64::consts::PI * self.radius
     }
 }
 
