@@ -18,5 +18,21 @@ fn main() {
     hello_coin(Coin::Two);
     hello_coin(Coin::Five);
     hello_coin(Coin::Ten);
+    
+    enum TheBill {
+        Five,
+        Ten,
+        Fifty,
+    }
+    fn hello_bill(bill: TheBill) {
+        match bill {
+            TheBill::Five => {println!("Малютка 5-ти рублевая");},
+            TheBill::Ten => {println!("Классика");},
+            TheBill::Fifty => {println!("50 рублей");},
+        }
+    }
+    hello_bill(TheBill::Five);
+    hello_bill(TheBill::Ten);
+    hello_bill(TheBill::Fifty);
 }
 
