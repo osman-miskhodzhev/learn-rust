@@ -26,46 +26,6 @@ impl Rectangle {
     }
 }
 
-struct Box {
-    width: u32,
-    height: u32,
-    depth: u32,
-}
-
-impl Box {
-    fn volume(&self) -> u32 {
-        self.width * self.height * self.depth
-    }
-    
-    fn area(&self) -> u32 {
-        2 * (
-            self.width * self.height +
-            self.width * self.depth +
-            self.height * self.depth
-        )
-    }
-    fn info(&self) {
-        println!("Параллепипед {}x{}x{}", self.width, self.height, self.depth);
-        println!("Его объем равен {}", self.volume());
-        println!("Его площадь равна {}", self.area());
-        println!("===================================");
-    }
-}
-
-struct Circle {
-    radius: f64
-}
-impl Circle {
-    fn area(&self) -> f64 {
-        std::f64::consts::PI * self.radius * self.radius
-    }
-    fn info(&self) {
-        println!("Это окружность с радиусом {}, длинной {} и площадью {}", self.radius, self.len(), self.area())
-    }
-    fn len(&self) -> f64 {
-        2.0*std::f64::consts::PI * self.radius
-    }
-}
 
 fn main() {
     
@@ -77,18 +37,5 @@ fn main() {
         height: 30.0,
     };
     rect.info();
-    
-
-    
-    let cube = Box {
-        width: 300,
-        height: 450,
-        depth: 100
-    };
-
-    cube.info();
-    
-    let circle = Circle {radius: 30.0};
-    circle.info();
 }   
 
