@@ -1,31 +1,6 @@
-struct Rectangle {
-    width: f32,
-    height: f32,
-}
+mod utils;
 
-impl Rectangle {
-    fn area(&self) -> f32 {
-        self.width * self.height
-    }
-    
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.height > other.height
-    }
-    
-    fn info(&self) {
-        println!(
-            "Прямоугольник {}x{}",
-            self.width, self.height
-        );
-        
-        println!(
-            "Его площадь равна {}",
-            self.area()
-        );
-        println!("===================================");
-    }
-}
-
+use utils::Rectangle;
 
 fn main() {
     
