@@ -1,6 +1,6 @@
-mod utils;
+mod shape;
 
-use utils::Rectangle;
+use shape::Rectangle;
 
 fn main() {
     
