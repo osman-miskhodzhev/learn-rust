@@ -1,6 +1,7 @@
 mod shape;
 
 use shape::Rectangle;
+use shape::Circle;
 
 fn main() {
     
@@ -12,5 +13,12 @@ fn main() {
         height: 30.0,
     };
     rect.info();
+
+
+    let circle1 = Circle {
+        radius: 40.0,
+    };
+    
+    println!("Площадь круга радиусом в {} см. равна {}", circle1.radius, circle1.area());
 }   
 

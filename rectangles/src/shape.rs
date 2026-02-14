@@ -25,7 +25,7 @@ pub struct Circle {
 
 impl Circle {
     pub fn area(&self) -> f32 {
-        2*std::f32::consts:PI * self.radius * self.radius
+        std::f32::consts::PI * self.radius * self.radius
     }
 }
 
