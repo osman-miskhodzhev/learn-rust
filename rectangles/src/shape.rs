@@ -1,4 +1,3 @@
-// src/rectangle.rs
 pub struct Rectangle {
     pub width: f32,
     pub height: f32,
@@ -19,3 +18,14 @@ impl Rectangle {
         println!("===================================");
     }
 }
+
+pub struct Circle {
+    pub radius: f32,
+}
+
+impl Circle {
+    pub fn area(&self) -> f32 {
+        2*std::f32::consts:PI * self.radius * self.radius
+    }
+}
+
