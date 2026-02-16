@@ -12,7 +12,7 @@ fn check_collision(pos: Vec2, radius: f32, rect: Rect) -> bool {
 
 #[macroquad::main("Collision")]
 async fn main() {
-    let mut pos = Vec2::new(400.0, 300.0);
+    let mut pos = Vec2::new(100.0, 350.0);
     let radius = 20.0; // Шарик меньше
     let speed = 2.0;
 
