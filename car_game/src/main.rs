@@ -1,68 +1,44 @@
-
 use macroquad::prelude::*;
 
 struct Car {
     pos: Vec2,
     radius: f32,
     speed: f32,
-    boost: f32,
+    speed_boost: f32,
 }
 
 impl Car {
     fn new(x: f32, y: f32) -> Self {
-        Self { pos: Vec2::new(x, y), radius: 20.0, speed: 2.0, boost: 0.1 }
+        Self { pos: Vec2::new(x, y), radius: 2.0, speed: 2.0, speed_boost: 0.01}
     }
 
-    fn update(&mut self, obstacles: &[Rect]) {
-        // Ускорение
-        if is_key_down(KeyCode::LeftShift) {
-            self.speed += self.boost;
-        }
+    fn get_speed(&mut self) -> f32 {
+        self.speed += self.speed_boost;
+        self.speed
+    }
 
-        let mut next_pos = self.pos;
-        if is_key_down(KeyCode::Right) { next_pos.x += self.speed; }
-        if is_key_down(KeyCode::Left) { next_pos.x -= self.speed; }
-        if is_key_down(KeyCode::Up) { next_pos.y -= self.speed; }
-        if is_key_down(KeyCode::Down) { next_pos.y += self.speed; }
+    fn update(&mut self) {
+        if is_key_down(KeyCode::Right) { self.pos.x += self.get_speed(); }
+        if is_key_down(KeyCode::Left) { self.pos.x -= self.get_speed(); }
+        if is_key_down(KeyCode::Up) { self.pos.y -= self.get_speed(); }
+        if is_key_down(KeyCode::Down) { self.pos.y += self.get_speed(); }
 
-        // Проверка столкновений
-        let mut collide = false;
-        for rect in obstacles {
-            let closest = Vec2::new(
-                next_pos.x.clamp(rect.x, rect.x + rect.w),
-                next_pos.y.clamp(rect.y, rect.y + rect.h),
-            );
-            if next_pos.distance_squared(closest) < self.radius * self.radius {
-                collide = true;
-                break;
-            }
-        }
-
-        if !collide { self.pos = next_pos; }
+        self.pos.x = self.pos.x.clamp(self.radius, screen_width() - self.radius);
+        self.pos.y = self.pos.y.clamp(self.radius, screen_height() - self.radius);
     }
 
     fn draw(&self) {
-        draw_circle(self.pos.x, self.pos.y, self.radius, GREEN);
+        draw_circle(self.pos.x, self.pos.y, self.radius, RED);
     }
 }
 
-#[macroquad::main("Collision")]
+#[macroquad::main("Simple")]
 async fn main() {
     let mut car = Car::new(100.0, 350.0);
-    let obstacles = [
-        Rect::new(300.0, 100.0, 100.0, 200.0),
-        Rect::new(500.0, 400.0, 200.0, 50.0),
-    ];
-
     loop {
         clear_background(BLACK);
-        for rect in &obstacles {
-            draw_rectangle(rect.x, rect.y, rect.w, rect.h, RED);
-        }
-        
-        car.update(&obstacles);
+        car.update();
         car.draw();
-        
         next_frame().await;
     }
 }
