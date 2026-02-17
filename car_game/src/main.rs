@@ -9,7 +9,7 @@ struct Car {
 
 impl Car {
     fn new(x: f32, y: f32) -> Self {
-        Self { pos: Vec2::new(x, y), radius: 2.0, base_speed: 2.0, boost: 5.0}
+        Self { pos: Vec2::new(x, y), radius: 2.0, base_speed: 2.0, boost: 1.0}
     }
 
     fn update(&mut self) {
