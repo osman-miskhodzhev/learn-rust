@@ -3,26 +3,29 @@ use macroquad::prelude::*;
 struct Car {
     pos: Vec2,
     radius: f32,
-    speed: f32,
-    speed_boost: f32,
+    base_speed: f32, // Обычная скорость
+    boost: f32,      // Добавка к скорости
 }
 
 impl Car {
     fn new(x: f32, y: f32) -> Self {
-        Self { pos: Vec2::new(x, y), radius: 2.0, speed: 2.0, speed_boost: 0.01}
-    }
-
-    fn get_speed(&mut self) -> f32 {
-        self.speed += self.speed_boost;
-        self.speed
+        Self { pos: Vec2::new(x, y), radius: 2.0, base_speed: 2.0, boost: 5.0}
     }
 
     fn update(&mut self) {
-        if is_key_down(KeyCode::Right) { self.pos.x += self.get_speed(); }
-        if is_key_down(KeyCode::Left) { self.pos.x -= self.get_speed(); }
-        if is_key_down(KeyCode::Up) { self.pos.y -= self.get_speed(); }
-        if is_key_down(KeyCode::Down) { self.pos.y += self.get_speed(); }
+        // Вычисляем скорость только для этого кадра
+        let current_speed = if is_key_down(KeyCode::LeftShift) {
+            self.base_speed + self.boost
+        } else {
+            self.base_speed
+        };
 
+        if is_key_down(KeyCode::Right) { self.pos.x += current_speed; }
+        if is_key_down(KeyCode::Left) { self.pos.x -= current_speed; }
+        if is_key_down(KeyCode::Up) { self.pos.y -= current_speed; }
+        if is_key_down(KeyCode::Down) { self.pos.y += current_speed; }
+
+        // Ограничение экраном
         self.pos.x = self.pos.x.clamp(self.radius, screen_width() - self.radius);
         self.pos.y = self.pos.y.clamp(self.radius, screen_height() - self.radius);
     }
