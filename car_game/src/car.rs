@@ -32,8 +32,8 @@ impl Car {
             self.base_speed
         };
 
-        if is_key_down(KeyCode::Right) { self.pos.x += current_speed; }
-        if is_key_down(KeyCode::Left) { self.pos.x -= current_speed; }
+        if is_key_down(KeyCode::Right) { self.pos.x += current_speed; self.angle += 0.9; }
+        if is_key_down(KeyCode::Left) { self.pos.x -= current_speed; self.angle -= 0.9;}
         if is_key_down(KeyCode::Up) { self.pos.y -= current_speed; }
         if is_key_down(KeyCode::Down) { self.pos.y += current_speed; }
 
@@ -55,6 +55,7 @@ impl Car {
                     self.texture.width() * scale_x,
                     self.texture.height() * scale_y
                 )),
+                rotation: self.angle,
                 ..Default::default()
             }
         );
